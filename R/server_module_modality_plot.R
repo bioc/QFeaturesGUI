@@ -109,8 +109,8 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
             req(nrow(plot_data) > 0L)
             if (input$annotation == "Sample names") {
                 plot <- ggplot(plot_data, aes(x = colname, y = value, group = rowname)) +
-                    geom_line() +
-                    geom_point() +
+                    geom_line(aes(color = rowname)) +
+                    geom_point(aes(color = rowname)) +
                     facet_grid(~assay)
             } else {
                 plot_data$rowname <- factor(plot_data$rowname,

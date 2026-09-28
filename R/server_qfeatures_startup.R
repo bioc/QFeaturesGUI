@@ -141,7 +141,6 @@ server_qfeatures_startup <- function(
             } else {
                 seq_along(uploaded)
             }
-            # Demo loading runs after a flush, outside a reactive context.
             shiny::isolate(on_load(uploaded, initial_idx))
             NULL
         }, error = function(e) e)
@@ -155,14 +154,13 @@ server_qfeatures_startup <- function(
         invisible(NULL)
     }
 
-    read_startup_qfeatures <- function(reader, use_demo = FALSE) {
+    read_startup_qfeatures <- function(reader, use_demo = FALSE, processed = FALSE) {
         uploaded_qfeatures(NULL)
         upload_message(NULL)
         startup_reading(TRUE)
 
-        # Flush the progress indicator before reading a potentially large file.
         session$onFlushed(function() {
-            uploaded <- tryCatch(reader(), error = function(e) e)
+            uploaded <- tryCatch(reader(processed), error = function(e) e)
             startup_reading(FALSE)
             if (inherits(uploaded, "error")) {
                 upload_message(paste(
@@ -185,7 +183,7 @@ server_qfeatures_startup <- function(
 
     shiny::observeEvent(input$startup_qfeatures_rds, {
         datapath <- input$startup_qfeatures_rds$datapath
-        read_startup_qfeatures(function() check_qfeatures(datapath))
+        read_startup_qfeatures(function(processed = FALSE) check_qfeatures(datapath))
     }, ignoreInit = TRUE)
 
     shiny::observeEvent(input$startup_load_qfeatures, {
@@ -209,7 +207,7 @@ server_qfeatures_startup <- function(
     }, ignoreInit = TRUE)
 
     shiny::observeEvent(input$startup_use_demo_qfeatures, {
-        read_startup_qfeatures(demo_qfeatures, use_demo = TRUE)
+        read_startup_qfeatures(demo_qfeatures, use_demo = TRUE, processed = app_name == "visualizeQFeatures")
     }, ignoreInit = TRUE)
 
     shiny::observeEvent(input$startup_show_upload, {

@@ -48,12 +48,14 @@ check_qfeatures <- function(qfeatures) {
 
 #' Build the bundled demo QFeatures object
 #'
+#' @param fullProcessing `logical(1)` indicating if the demo qfeatures
+#'      should already be processed
 #' @return A \linkS4class{QFeatures} object built from the package
 #'   \code{inputTable} and \code{sampleTable} example datasets.
 #'
 #' @keywords internal
 #' @noRd
-demo_qfeatures <- function() {
+demo_qfeatures <- function(fullProcessing = FALSE) {
     data_env <- new.env(parent = emptyenv())
     utils::data(
         list = c("inputTable", "sampleTable"),
@@ -74,8 +76,16 @@ demo_qfeatures <- function() {
         removeEmptyCols = TRUE,
         verbose = FALSE
     )
-    if (length(qfeatures) > 0) {
-        qfeatures <- QFeatures::zeroIsNA(qfeatures, i = seq_along(qfeatures))
+    qfeatures <- QFeatures::zeroIsNA(qfeatures, i = seq_along(qfeatures))
+    if (fullProcessing) {
+        qfeatures <- qfeatures[, colData(qfeatures)$SampleType %in% c("Monocyte", "Macrophage"), ]
+        qfeatures <- filterFeatures(qfeatures, ~ Potential.contaminant != "+" & Reverse != "+" )
+        logNames <- paste0(names(qfeatures), "_log")
+        qfeatures <- QFeatures::logTransform(qfeatures, i = names(qfeatures), name = logNames)
+        qfeatures <- QFeatures::joinAssays(qfeatures, i = logNames, name = "joinedPSM")
+        qfeatures <- QFeatures::aggregateFeatures(qfeatures, i = "joinedPSM", name = "peptides", fun = colMedians, fcol = "Modified.sequence", na.rm = TRUE)
+        qfeatures <- QFeatures::aggregateFeatures(qfeatures, i = "peptides", name = "proteins", fun = colMedians, fcol = "protein", na.rm = TRUE)
+        qfeatures <- QFeatures::normalize(qfeatures, i = "proteins", name = "protNorm", method = "center.median")
     }
 
     qfeatures
