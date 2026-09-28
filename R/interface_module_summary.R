@@ -42,6 +42,7 @@ interface_module_summary <- function(id, ...) {
             width = 12,
             solidHeader = TRUE,
             collapsible = TRUE,
+            collapsed = TRUE,
             interface_module_pca_box(NS(id, "summary_pca"))
         ),
         box(
@@ -50,6 +51,7 @@ interface_module_summary <- function(id, ...) {
             width = 12,
             solidHeader = TRUE,
             collapsible = TRUE,
+            collapsed = TRUE,
             interface_module_modality_plot(NS(id, "modality_plot"))
         ),
         ...

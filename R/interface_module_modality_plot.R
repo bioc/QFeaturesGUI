@@ -24,6 +24,9 @@ interface_module_modality_plot <- function(id) {
             ),
             selectizeInput(NS(id, "featnames"),
                 "Select feature to inspect",
+                choices = NULL),
+            selectizeInput(NS(id, "annotation"),
+                "Select sample annotation",
                 choices = NULL)
         ),
         box(

@@ -13,7 +13,8 @@
 #' @keywords internal
 #'
 #' @importFrom shiny moduleServer observe req reactive
-#' @importFrom ggplot2 geom_line geom_point facet_grid
+#' @importFrom ggplot2 geom_line geom_point geom_boxplot facet_grid
+#' @importFrom SummarizedExperiment colData
 #' @importFrom MultiAssayExperiment longForm
 #' @importFrom plotly plot_ly renderPlotly layout
 #'
@@ -43,6 +44,20 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
             )
         })
 
+        observe({
+            req(assays_to_process())
+            choices <- c("Sample names", colnames(colData(assays_to_process())))
+            selected <- isolate(input$annotation)
+            if (length(selected) != 1L || !(selected %in% choices)) {
+                selected <- "Sample names"
+            }
+            updateSelectInput(session,
+                "annotation",
+                choices = choices,
+                selected = selected
+            )
+        })
+
         sub_qfeat <- reactive({
             qfeatures <- assays_to_process()
             req(input$selected_assay, input$selected_assay %in% names(qfeatures))
@@ -65,32 +80,52 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
             featNames <- rownames(sub_qfeat())[[input$reference_modality]]
             updateSelectizeInput(
                 session,
-                'featnames',
+                "featnames",
                 choices = featNames,
                 server = TRUE)
         })
         modality_data <- reactive({
             req(sub_qfeat())
-            req(input$featnames)
-            print(input$featnames)
+            req(input$featnames, input$annotation)
             feat <- assays_to_process()[input$featnames, , ]
             feat <- feat[, , names(sub_qfeat())]
-            print(longForm(feat))
             modality_df <- data.frame(longForm(feat))
+            if (input$annotation != "Sample names") {
+                sample_metadata <- colData(feat)
+                req(input$annotation %in% colnames(sample_metadata))
+                sample_index <- match(modality_df$primary, rownames(sample_metadata))
+                modality_df$sample_group <- factor(
+                    sample_metadata[[input$annotation]][sample_index],
+                    exclude = NULL
+                )
+            }
             modality_df$assay <- factor(modality_df$assay,
                 levels = names(sub_qfeat()))
-            print(modality_df)
             modality_df
         })
 
+        modality_plot <- reactive({
+            plot_data <- modality_data()
+            req(nrow(plot_data) > 0L)
+            if (input$annotation == "Sample names") {
+                plot <- ggplot(plot_data, aes(x = colname, y = value, group = rowname)) +
+                    geom_line() +
+                    geom_point() +
+                    facet_grid(~assay)
+            } else {
+                plot_data$rowname <- factor(plot_data$rowname,
+                    levels = unique(plot_data$rowname))
+                plot <- ggplot(plot_data, aes(x = rowname, y = value, fill = sample_group)) +
+                    geom_boxplot(na.rm = TRUE) +
+                    ggplot2::labs(x = "Feature", y = "Intensity", fill = input$annotation) +
+                    facet_grid(~assay, scales = "free_x")
+            }
+            plot
+        })
+
         output$modality_plot <- renderPlotly({
-            req(modality_data())
-            # wrap into error_wrapper
-            plot <- ggplot(data = modality_data(), aes(x = colname, y = value, group = rowname)) + 
-                geom_line() +
-                geom_point() +
-                facet_grid(~assay)
-            ggplotly(plot)
+            ggplotly(modality_plot()) %>%
+                layout(boxmode = "group")
         })
     })
 }
