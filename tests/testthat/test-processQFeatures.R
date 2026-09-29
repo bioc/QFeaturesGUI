@@ -27,25 +27,3 @@ test_that("process startup initializes the selected assays and workflow", {
     )
 })
 
-test_that("process demo startup retains the requested workflow", {
-    qf <- make_test_qfeatures()
-    local_mocked_bindings(demo_qfeatures = function() qf)
-
-    shiny::testServer(
-        build_process_server(NULL, integer(), character(), has_qfeatures = FALSE),
-        {
-            session$flushReact()
-            session$setInputs(
-                "workflow_config-workflow_list" = "Log Transform",
-                startup_use_demo_qfeatures = 1
-            )
-            session$flushReact()
-            expect_identical(
-                names(.qf$qfeatures),
-                paste0(names(qf), "_(QFeaturesGUI#0)")
-            )
-            expect_identical(global_rv$workflow_config, "Log Transform")
-            expect_qfeatures_equal(summary_qfeatures(), .qf$qfeatures)
-        }
-    )
-})

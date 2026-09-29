@@ -33,7 +33,7 @@ test_that("visualization updates after an upload and hides the startup button", 
 })
 
 test_that("visualization loads the bundled demo and retains existing assay names", {
-    demo <- demo_qfeatures()
+    demo <- demo_qfeatures(fullProcessing = TRUE)
 
     shiny::testServer(build_visualize_server(NULL, has_qfeatures = FALSE), {
         session$flushReact()

@@ -23,10 +23,19 @@
 #'   the initial sets after uploading the \code{.rds} file.
 #'
 #' @param prefilledSteps A character vector specifying the initial workflow
-#'   steps to display when the application launches. Steps must be provided
-#'   using their internal identifiers (e.g. \code{"sampleFiltering"},
-#'   \code{"featureFiltering"}, \code{"normalisation"}).
-#'
+#'   steps to display when the application launches. Available steps are:
+#'   \itemize{
+#'     \item \code{"sampleFiltering"}
+#'     \item \code{"featureFiltering"}
+#'     \item \code{"normalisation"}
+#'     \item \code{"zeroToNA"}
+#'     \item \code{"logTransform"}
+#'     \item \code{"imputation"}
+#'     \item \code{"missingValuesFeatures"}
+#'     \item \code{"missingValuesSamples"}
+#'     \item \code{"aggregation"}
+#'     \item \code{"join"}
+#'   }
 #' @param maxSize An integer that changes the \code{shiny.maxRequestSize}
 #'   value, in MB. This controls the maximum upload size for the startup
 #'   \code{.rds} file upload modal.
