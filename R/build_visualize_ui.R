@@ -16,6 +16,7 @@ build_visualize_ui <- function() {
         body = dashboardBody(
             useShinyjs(),
             waiter::useWaiter(),
+            includeCSS(system.file(package = "QFeaturesGUI", "www", "style.css")),
             shiny::uiOutput("startup_upload_ui"),
             interface_module_summary(id = "visualize")
         ),

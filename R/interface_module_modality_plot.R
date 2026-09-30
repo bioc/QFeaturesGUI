@@ -27,7 +27,11 @@ interface_module_modality_plot <- function(id) {
                 choices = NULL),
             selectizeInput(NS(id, "annotation"),
                 "Select sample annotation",
-                choices = NULL)
+                choices = NULL),
+            actionButton(NS(id, "render"), "Render plot",
+                width = "100%",
+                class = "load-button"
+            )
         ),
         box(
             title = "Intensity across modality",

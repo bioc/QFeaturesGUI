@@ -33,7 +33,7 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
 
         observe({
             choices <- assay_choices()
-            selected <- isolate(input$selected_assay)
+            selected <- intersect(isolate(input$selected_assay), unname(choices))
             if (length(selected) != 1L || !(selected %in% choices)) {
                 selected <- if (length(choices) > 0L) unname(choices[1]) else character()
             }
@@ -61,7 +61,7 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
         sub_qfeat <- reactive({
             qfeatures <- assays_to_process()
             req(input$selected_assay, input$selected_assay %in% names(qfeatures))
-            selected <- assays_to_process()[, , which(names(qfeatures) %in% input$selected_assay)]
+            selected <- suppressWarnings(suppressMessages(assays_to_process()[, , which(names(qfeatures) %in% input$selected_assay)]))
             stopifnot(is(selected, "QFeatures"))
             selected
         })
@@ -78,18 +78,23 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
             req(sub_qfeat())
             req(input$reference_modality)
             featNames <- rownames(sub_qfeat())[[input$reference_modality]]
+            selectedFeat <- intersect(isolate(input$featnames), featNames)
+            if(length(selectedFeat) == 0) {
+                selectedFeat <- featNames[[1]]
+            }
             updateSelectizeInput(
                 session,
                 "featnames",
                 choices = featNames,
+                selected = selectedFeat,
                 server = TRUE)
         })
         modality_data <- reactive({
             req(sub_qfeat())
             req(input$featnames, input$annotation)
-            feat <- assays_to_process()[input$featnames, , ]
-            feat <- feat[, , names(sub_qfeat())]
-            modality_df <- data.frame(longForm(feat))
+            feat <- suppressWarnings(suppressMessages(assays_to_process()[input$featnames, , ]))
+            feat <- suppressWarnings(suppressMessages(feat[, , names(sub_qfeat())]))
+            modality_df <- suppressMessages(data.frame(longForm(feat)))
             if (input$annotation != "Sample names") {
                 sample_metadata <- colData(feat)
                 req(input$annotation %in% colnames(sample_metadata))
@@ -104,7 +109,7 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
             modality_df
         })
 
-        modality_plot <- reactive({
+        modality_plot <- eventReactive(input$render, {
             plot_data <- modality_data()
             req(nrow(plot_data) > 0L)
             if (input$annotation == "Sample names") {
