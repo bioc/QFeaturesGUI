@@ -79,7 +79,9 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
             req(input$reference_modality)
             featNames <- rownames(sub_qfeat())[[input$reference_modality]]
             selectedFeat <- intersect(isolate(input$featnames), featNames)
-            if(length(selectedFeat) == 0) {
+            if (length(featNames) == 0) {
+                selectedFeat <- NULL
+            } else if (length(selectedFeat) == 0) {
                 selectedFeat <- featNames[[1]]
             }
             updateSelectizeInput(
