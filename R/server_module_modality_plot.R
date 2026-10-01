@@ -34,7 +34,7 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
         observe({
             choices <- assay_choices()
             selected <- intersect(isolate(input$selected_assay), unname(choices))
-            if (length(selected) != 1L || !(selected %in% choices)) {
+            if (length(selected) == 0) {
                 selected <- if (length(choices) > 0L) unname(choices[1]) else character()
             }
             updateSelectInput(session,
