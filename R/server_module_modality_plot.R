@@ -13,7 +13,7 @@
 #' @keywords internal
 #'
 #' @importFrom shiny moduleServer observe req reactive
-#' @importFrom ggplot2 geom_line geom_point geom_boxplot facet_grid
+#' @importFrom ggplot2 geom_line geom_point geom_boxplot facet_grid theme_minimal theme element_text scale_x_discrete
 #' @importFrom SummarizedExperiment colData
 #' @importFrom MultiAssayExperiment longForm
 #' @importFrom plotly plot_ly renderPlotly layout
@@ -89,7 +89,8 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
                 "featnames",
                 choices = featNames,
                 selected = selectedFeat,
-                server = TRUE)
+                server = TRUE
+            )
         })
         modality_data <- reactive({
             req(sub_qfeat())
@@ -107,7 +108,8 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
                 )
             }
             modality_df$assay <- factor(modality_df$assay,
-                levels = names(sub_qfeat()))
+                levels = names(sub_qfeat())
+            )
             modality_df
         })
 
@@ -118,14 +120,33 @@ server_module_modality_plot <- function(id, assays_to_process, assay_labels = id
                 plot <- ggplot(plot_data, aes(x = colname, y = value, group = rowname)) +
                     geom_line(aes(color = rowname)) +
                     geom_point(aes(color = rowname)) +
-                    facet_grid(~assay)
+                    scale_x_discrete(labels = function(x) {
+                        ifelse(
+                            nchar(x) > 10,
+                            paste0(substr(x, 1, 7), "..."),
+                            x
+                        )
+                    }) +
+                    facet_grid(~assay) +
+                    theme_minimal() +
+                    theme(axis.text.x = element_text(angle = -90, hjust = 0))
             } else {
                 plot_data$rowname <- factor(plot_data$rowname,
-                    levels = unique(plot_data$rowname))
+                    levels = unique(plot_data$rowname)
+                )
                 plot <- ggplot(plot_data, aes(x = rowname, y = value, fill = sample_group)) +
                     geom_boxplot(na.rm = TRUE) +
                     ggplot2::labs(x = "Feature", y = "Intensity", fill = input$annotation) +
-                    facet_grid(~assay, scales = "free_x")
+                    scale_x_discrete(labels = function(x) {
+                        ifelse(
+                            nchar(x) > 10,
+                            paste0(substr(x, 1, 7), "..."),
+                            x
+                        )
+                    }) +
+                    facet_grid(~assay, scales = "free_x") +
+                    theme_minimal() +
+                    theme(axis.text.x = element_text(angle = -90, hjust = 0))
             }
             plot
         })

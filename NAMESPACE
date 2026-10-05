@@ -50,6 +50,7 @@ importFrom(dplyr,mutate)
 importFrom(ggplot2,
   aes,
   annotate,
+  element_text,
   facet_grid,
   geom_boxplot,
   geom_histogram,
@@ -58,7 +59,10 @@ importFrom(ggplot2,
   geom_violin,
   geom_vline,
   ggplot,
-  scale_x_continuous
+  scale_x_continuous,
+  scale_x_discrete,
+  theme,
+  theme_minimal
 )
 importFrom(htmltools,
   HTML,
