@@ -1,4 +1,4 @@
-#' Server Builder for the processQFeatures app
+#' Server Builder for the process app
 #'
 #' @param qfeatures a `QFeatures` object given by the user
 #' @param initial_sets index of the base sets of the QFeatures
@@ -6,7 +6,7 @@
 #' @param has_qfeatures `logical(1)` indicating whether the app was launched
 #'   with an initial QFeatures object
 #'
-#' @return return the server function for the processQFeatures app.
+#' @return return the server function for the process app.
 #' @rdname INTERNAL_build_process_server
 #' @keywords internal
 #'
@@ -109,7 +109,7 @@ build_process_server <- function(qfeatures, initial_sets, initial_steps, has_qfe
 
         server_qfeatures_startup(
             input, output, session,
-            app_name = "processQFeatures",
+            app_name = "process",
             has_qfeatures = has_qfeatures,
             select_initial_sets = TRUE,
             on_load = function(uploaded, initial_idx) {

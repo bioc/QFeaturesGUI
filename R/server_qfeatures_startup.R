@@ -207,7 +207,7 @@ server_qfeatures_startup <- function(
     }, ignoreInit = TRUE)
 
     shiny::observeEvent(input$startup_use_demo_qfeatures, {
-        read_startup_qfeatures(demo_qfeatures, use_demo = TRUE, processed = app_name == "visualizeQFeatures")
+        read_startup_qfeatures(demo_qfeatures, use_demo = TRUE, processed = app_name == "visualise")
     }, ignoreInit = TRUE)
 
     shiny::observeEvent(input$startup_show_upload, {

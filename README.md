@@ -34,11 +34,14 @@ analysis workflow.
 
 Currently available applications include:
 
-- **Data import** (`importQFeatures`)  
+- **Data import** (`import`)\
   Import quantitative proteomics data into `QFeatures` objects
 
-- **Data processing** (`processQFeatures`)  
+- **Data processing** (`process`)\
   Perform common data processing steps on `QFeatures` and `scp` objects
+
+- **Data visualisation** (`visualise`)\
+  Explore and visualise `QFeatures` objects
 
 Additional applications will be added in future releases.
 

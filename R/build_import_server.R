@@ -5,7 +5,7 @@
 #' @param input_table a dataframe that contains
 #'  the input table given by the user
 #'
-#' @return return the server function for the importQFeatures app.
+#' @return return the server function for the import app.
 #' @rdname INTERNAL_build_import_server
 #' @keywords internal
 #'

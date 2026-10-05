@@ -1,7 +1,7 @@
 #' Launch a Shiny application to process QFeatures objects
 #'
 #' @description
-#' \code{processQFeatures()} launches an interactive Shiny application
+#' \code{process()} launches an interactive Shiny application
 #' that allows users to visually configure and apply pre-processing
 #' workflows to a \linkS4class{QFeatures} object.
 #'
@@ -41,7 +41,7 @@
 #'   \code{.rds} file upload modal.
 #'
 #' @return
-#' The processQFeatures Shiny application.
+#' The process Shiny application.
 #'
 #' @details
 #' The application provides a drag-and-drop workflow builder that allows
@@ -58,12 +58,12 @@
 #' library(QFeaturesGUI)
 #'
 #'
-#' app <- processQFeatures()
+#' app <- process()
 #'
 #' if (interactive()) {
 #'     shiny::runApp(app)
 #' }
-processQFeatures <- function(
+process <- function(
       qfeatures = NULL,
       initialSets = NULL,
       prefilledSteps = c(

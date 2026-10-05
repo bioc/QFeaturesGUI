@@ -1,4 +1,4 @@
-build_visualize_server <- function(qfeatures, has_qfeatures) {
+build_visualise_server <- function(qfeatures, has_qfeatures) {
     server <- function(input, output, session) {
         global_rv$exception_data <- data.frame(
             id = character(),
@@ -31,7 +31,7 @@ build_visualize_server <- function(qfeatures, has_qfeatures) {
 
         server_qfeatures_startup(
             input, output, session,
-            app_name = "visualizeQFeatures",
+            app_name = "visualise",
             has_qfeatures = has_qfeatures,
             on_load = function(uploaded, initial_idx) {
                 current_qfeatures(uploaded)

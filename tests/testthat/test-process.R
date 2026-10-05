@@ -1,5 +1,5 @@
-test_that("processQFeatures can be constructed without a QFeatures object", {
-    app <- processQFeatures()
+test_that("process can be constructed without a QFeatures object", {
+    app <- process()
 
     expect_s3_class(app, "shiny.appobj")
 })

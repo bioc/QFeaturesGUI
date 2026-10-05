@@ -1,6 +1,6 @@
 #' UI builder for import app
 #'
-#' @return A shiny dashboard UI for importQFeatures app
+#' @return A shiny dashboard UI for import app
 #' @rdname INTERNAL_build_import_ui
 #' @keywords internal
 #'
@@ -14,7 +14,7 @@
 build_import_ui <- function() {
     ui <- dashboardPage(
         skin = "blue",
-        header = header("importQFeatures"),
+        header = header("import"),
         dashboardSidebar(disable = TRUE, minified = FALSE, width = 0),
         dashboardBody(
             useShinyjs(),

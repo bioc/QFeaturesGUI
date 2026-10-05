@@ -1,5 +1,5 @@
 ---
-title: "importQFeatures App"
+title: "import App"
 author:
     - name: Léopold Guyot
     - name: Loïc Guille
@@ -14,7 +14,7 @@ bibliography: QFeaturesGUI.bib
 date: "`r BiocStyle::doc_date()`"
 package: "`r BiocStyle::pkg_ver('QFeaturesGUI')`"
 vignette: >
-  %\VignetteIndexEntry{importQFeatures App}
+  %\VignetteIndexEntry{import App}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -118,7 +118,7 @@ on a row (corresponding to an assay), the selected assay will appear below,
 once again check if everything looks as expected.
 
 Once everything looks fine, you can download the QFeatures object to use it with R or
-continue the analysis using the `processQFeatures()` function.
+continue the analysis using the `process()` function.
 
 To download, click on the `Download` button (`E`); this will download a `.zip` file
 containing *initial_QFeatures.rds*, the QFeatures object on your computer,

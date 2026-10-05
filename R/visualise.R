@@ -1,8 +1,8 @@
-#' Launch a Shiny application to visualize QFeatures objects
+#' Launch a Shiny application to visualise QFeatures objects
 #'
 #' @description
-#' \code{visualizeQFeatures()} launches an interactive Shiny application
-#' that allows users to visualize a \linkS4class{QFeatures} object.
+#' \code{visualise()} launches an interactive Shiny application
+#' that allows users to visualise a \linkS4class{QFeatures} object.
 #'
 #' The input \code{qfeatures} can be provided as an in-memory
 #' \linkS4class{QFeatures} object, as a path to an \code{.rds} file
@@ -10,7 +10,7 @@
 #' to upload a \linkS4class{QFeatures} object from an \code{.rds} file
 #' or use the bundled demo dataset.
 #'
-#' @param qfeatures Optional \linkS4class{QFeatures} object to visualize,
+#' @param qfeatures Optional \linkS4class{QFeatures} object to visualise,
 #'   or a character string specifying the path to an \code{.rds} file
 #'   containing one. If omitted or \code{NULL}, the app displays a startup
 #'   modal for uploading a file or loading the bundled demo.
@@ -20,7 +20,7 @@
 #'   \code{.rds} file upload modal.
 #'
 #' @return
-#' The visualizeQFeatures Shiny application.
+#' The visualise Shiny application.
 #'
 #' @export
 #'
@@ -31,12 +31,12 @@
 #' library(QFeaturesGUI)
 #'
 #'
-#' app <- visualizeQFeatures()
+#' app <- visualise()
 #'
 #' if (interactive()) {
 #'     shiny::runApp(app)
 #' }
-visualizeQFeatures <- function(
+visualise <- function(
       qfeatures = NULL,
       maxSize = 100
 ) {
@@ -53,8 +53,8 @@ visualizeQFeatures <- function(
         system.file("www", package = "QFeaturesGUI")
     )
 
-    ui <- build_visualize_ui()
-    server <- build_visualize_server(
+    ui <- build_visualise_ui()
+    server <- build_visualise_server(
         qfeatures,
         has_qfeatures = !qfeatures_missing
     )

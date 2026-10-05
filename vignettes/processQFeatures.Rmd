@@ -1,5 +1,5 @@
 ---
-title: "processQFeatures App"
+title: "process App"
 author:
     - name: Léopold Guyot
     - name: Loïc Guille
@@ -14,7 +14,7 @@ bibliography: QFeaturesGUI.bib
 date: "`r BiocStyle::doc_date()`"
 package: "`r BiocStyle::pkg_ver('QFeaturesGUI')`"
 vignette: >
-  %\VignetteIndexEntry{processQFeatures App}
+  %\VignetteIndexEntry{process App}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -31,10 +31,10 @@ knitr::opts_chunk$set(
 library(QFeaturesGUI)
 ```
 
-This app can be used once the data from `importQFeatures()` have been downloaded. In order to
+This app can be used once the data from `import()` have been downloaded. In order to
 do that, unzip the folder downloaded, and load the RDS that contain the QFeatures object in your R
-environment or pass directly the path as an argument when using `processQFeatures()`. 
-You can also directly start the application `processQFeatures()` and load the RDS into 
+environment or pass directly the path as an argument when using `process()`.
+You can also directly start the application `process()` and load the RDS into
 the application. 
 
 # Start the app

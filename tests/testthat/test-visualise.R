@@ -1,14 +1,14 @@
-test_that("visualizeQFeatures accepts omitted, object, and RDS inputs", {
+test_that("visualise accepts omitted, object, and RDS inputs", {
     qf <- make_test_qfeatures()
     path <- tempfile(fileext = ".rds")
     saveRDS(qf, path)
 
-    expect_s3_class(visualizeQFeatures(), "shiny.appobj")
-    expect_s3_class(visualizeQFeatures(NULL), "shiny.appobj")
-    expect_s3_class(visualizeQFeatures(qf), "shiny.appobj")
-    expect_s3_class(visualizeQFeatures(path), "shiny.appobj")
-    expect_error(visualizeQFeatures(data.frame(x = 1)), "must be a QFeatures object")
-    expect_error(visualizeQFeatures(tempfile()), "does not exist")
+    expect_s3_class(visualise(), "shiny.appobj")
+    expect_s3_class(visualise(NULL), "shiny.appobj")
+    expect_s3_class(visualise(qf), "shiny.appobj")
+    expect_s3_class(visualise(path), "shiny.appobj")
+    expect_error(visualise(data.frame(x = 1)), "must be a QFeatures object")
+    expect_error(visualise(tempfile()), "does not exist")
 })
 
 test_that("visualization updates after an upload and hides the startup button", {
@@ -16,7 +16,7 @@ test_that("visualization updates after an upload and hides the startup button", 
     path <- tempfile(fileext = ".rds")
     saveRDS(qf, path)
 
-    shiny::testServer(build_visualize_server(NULL, has_qfeatures = FALSE), {
+    shiny::testServer(build_visualise_server(NULL, has_qfeatures = FALSE), {
         session$flushReact()
         expect_null(current_qfeatures())
         expect_match(output$startup_upload_ui$html, "startup_show_upload")
@@ -35,7 +35,7 @@ test_that("visualization updates after an upload and hides the startup button", 
 test_that("visualization loads the bundled demo and retains existing assay names", {
     demo <- demo_qfeatures(fullProcessing = TRUE)
 
-    shiny::testServer(build_visualize_server(NULL, has_qfeatures = FALSE), {
+    shiny::testServer(build_visualise_server(NULL, has_qfeatures = FALSE), {
         session$flushReact()
         session$setInputs(startup_use_demo_qfeatures = 1)
         session$flushReact()
@@ -43,7 +43,7 @@ test_that("visualization loads the bundled demo and retains existing assay names
         expect_null(output$startup_upload_ui)
     })
 
-    shiny::testServer(build_visualize_server(demo, has_qfeatures = TRUE), {
+    shiny::testServer(build_visualise_server(demo, has_qfeatures = TRUE), {
         session$flushReact()
         expect_qfeatures_equal(current_qfeatures(), demo)
         expect_null(output$startup_upload_ui)

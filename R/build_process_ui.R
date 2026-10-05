@@ -1,4 +1,4 @@
-#' UI builder for the processQFeatures app
+#' UI builder for the process app
 #'
 #' @param initial_steps prefilled workflow steps
 #' @return A shiny dashboard UI
@@ -17,7 +17,7 @@
 build_process_ui <- function(initial_steps) {
     ui <- dashboardPage(
         skin = "blue",
-        header = header("processQFeatures"),
+        header = header("process"),
         sidebar = dashboardSidebar(
             sidebarMenu(
                 menuItem("Workflow Config",
@@ -82,7 +82,7 @@ build_process_ui <- function(initial_steps) {
                 tabItem(tabName = "step_20", uiOutput("dynamic_step_ui_20"))
             )
         ),
-        title = "processQFeatures",
+        title = "process",
         scrollToTop = TRUE
     )
 

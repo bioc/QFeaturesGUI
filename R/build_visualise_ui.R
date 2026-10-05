@@ -1,17 +1,17 @@
-#' UI builder for visualizeQFeatures
+#' UI builder for visualise
 #'
-#' @return A shiny dashboard UI for the visualizeQFeatures app
-#' @rdname INTERNAL_build_visualize_ui
+#' @return A shiny dashboard UI for the visualise app
+#' @rdname INTERNAL_build_visualise_ui
 #' @keywords internal
 #'
 #' @importFrom shinydashboard dashboardBody
 #' @importFrom shinydashboardPlus dashboardSidebar
 #' @importFrom shinyjs useShinyjs
 #' @importFrom waiter useWaiter
-build_visualize_ui <- function() {
+build_visualise_ui <- function() {
     ui <- dashboardPage(
         skin = "blue",
-        header = header("visualizeQFeatures"),
+        header = header("visualise"),
         sidebar = dashboardSidebar(disable = TRUE, minified = FALSE, width = 0),
         body = dashboardBody(
             useShinyjs(),
