@@ -34,4 +34,10 @@ The following functions are deprecated:
 They are at the deprecated stage of the Bioconductor deprecation cycle
 and may be made defunct in a future release cycle.
 }
+\examples{
+# Use import(), process(), and visualise() in new code.
+import_app <- suppressWarnings(importQFeatures())
+process_app <- suppressWarnings(processQFeatures())
+visualise_app <- suppressWarnings(visualizeQFeatures())
+}
 \keyword{internal}

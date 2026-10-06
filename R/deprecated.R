@@ -19,6 +19,11 @@
 #' @return A Shiny application object returned by the replacement function.
 #' @name QFeaturesGUI-deprecated
 #' @keywords internal
+#' @examples
+#' # Use import(), process(), and visualise() in new code.
+#' import_app <- suppressWarnings(importQFeatures())
+#' process_app <- suppressWarnings(processQFeatures())
+#' visualise_app <- suppressWarnings(visualizeQFeatures())
 NULL
 
 #' @rdname QFeaturesGUI-deprecated
