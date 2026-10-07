@@ -37,8 +37,13 @@ articles:
 reference:
   - title: Application launchers
     contents:
-      - importQFeatures
-      - processQFeatures
+      - import
+      - process
+      - visualise
+
+  - title: Deprecated functions
+    contents:
+      - QFeaturesGUI-deprecated
 
   - title: Data 
     contents:

@@ -138,7 +138,7 @@ For example, the application dedicated to importing data into a `QFeatures`
 object can be launched as follows:
 
 ```{r, eval = FALSE}
-app <- importQFeatures()
+app <- import()
 
 if (interactive()) {
     shiny::runApp(app)
@@ -148,7 +148,7 @@ if (interactive()) {
 Similarly, the application dedicated to data processing can be launched using:
 
 ```{r launch, eval = FALSE}
-app <- processQFeatures(qfeaturesObject)
+app <- process(qfeaturesObject)
 
 if (interactive()) {
     shiny::runApp(app)
@@ -164,11 +164,11 @@ interface.
 
 The use of each application is described in a corresponding vignette:
 
-- **Data import**: `importQFeatures`  
-    See the [importQFeatures vignette](importQFeatures.html)
+- **Data import**: `import`\
+    See the [import vignette](importQFeatures.html)
 
-- **Data processing**: `processQFeatures`  
-    See the [processQFeatures vignette](processQFeatures.html)
+- **Data processing**: `process`\
+    See the [process vignette](processQFeatures.html)
 
 Additional applications will be introduced in future releases and documented in
 their own vignettes.

@@ -1,4 +1,4 @@
-#' UI builder for the processQFeatures app
+#' UI builder for the process app
 #'
 #' @param initial_steps prefilled workflow steps
 #' @return A shiny dashboard UI
@@ -11,13 +11,13 @@
 #' @importFrom htmltools includeCSS
 #' @importFrom shinyFeedback useShinyFeedback
 #' @importFrom shinyalert useShinyalert
-#' @importFrom shiny icon
+#' @importFrom shiny icon downloadButton
 #' @importFrom waiter useWaiter
 #' @importFrom shinyjs useShinyjs
 build_process_ui <- function(initial_steps) {
     ui <- dashboardPage(
         skin = "blue",
-        header = header("processQFeatures"),
+        header = header("process"),
         sidebar = dashboardSidebar(
             sidebarMenu(
                 menuItem("Workflow Config",
@@ -49,7 +49,15 @@ build_process_ui <- function(initial_steps) {
                 ),
                 tabItem(
                     tabName = "summary_tab",
-                    interface_module_summary_tab("summary_tab")
+                    interface_module_summary(
+                        "summary_tab",
+                        downloadButton(
+                            outputId = "summary_tab-download_qfeatures",
+                            "Download QFeatures",
+                            class = "load-button",
+                            style = "width: 100%;"
+                        )
+                    )
                 ),
                 # Preconstructed workflow step tabs
                 tabItem(tabName = "step_1", uiOutput("dynamic_step_ui_1")),
@@ -74,7 +82,7 @@ build_process_ui <- function(initial_steps) {
                 tabItem(tabName = "step_20", uiOutput("dynamic_step_ui_20"))
             )
         ),
-        title = "processQFeatures",
+        title = "process",
         scrollToTop = TRUE
     )
 

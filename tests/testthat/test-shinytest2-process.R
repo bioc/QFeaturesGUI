@@ -96,10 +96,8 @@ make_process_test_qfeatures <- function() {
     ))
 }
 
-add_expected_process_assays <- function(
-      qfeatures, processed_qfeatures,
-      step_number, type
-) {
+add_expected_process_assays <- function(qfeatures, processed_qfeatures,
+    step_number, type) {
     expected <- qfeatures
     for (assay_name in names(processed_qfeatures)) {
         expected[[paste0(assay_name, "_", type, "_", step_number)]] <-
@@ -161,10 +159,10 @@ run_filtering_module_export <- function(qfeatures, type, condition_specs) {
     exported
 }
 
-test_that("{shinytest2}: processQFeatures demo startup loads bundled QFeatures", {
+test_that("{shinytest2}: process demo startup loads bundled QFeatures", {
     testthat::skip_on_cran()
 
-    appObject <- QFeaturesGUI::processQFeatures(prefilledSteps = character())
+    appObject <- QFeaturesGUI::process(prefilledSteps = character())
     app <- AppDriver$new(
         appObject,
         name = "processQFeatures_demo_startup",
@@ -184,7 +182,7 @@ test_that("{shinytest2}: processQFeatures demo startup loads bundled QFeatures",
     )))
 })
 
-test_that("{shinytest2} recording: processQFeatures", {
+test_that("{shinytest2} recording: process", {
     testthat::skip_on_cran()
 
     data("inputTable", package = "QFeaturesGUI")
@@ -197,12 +195,12 @@ test_that("{shinytest2} recording: processQFeatures", {
         removeEmptyCols = TRUE,
         verbose = FALSE
     )
-    appObject <- QFeaturesGUI::processQFeatures(qf, prefilledSteps = c(
+    appObject <- QFeaturesGUI::process(qf, prefilledSteps = c(
         "zeroToNA", "logTransform", "sampleFiltering", "featureFiltering", "missingValuesFeatures",
         "missingValuesSamples", "normalisation", "aggregation", "join", "aggregation"
     ))
     app <- AppDriver$new(appObject,
-        name = "processQFeatures", height = 1619, width = 1080
+        name = "process", height = 1619, width = 1080
     )
     on.exit(app$stop(), add = TRUE)
 
@@ -312,7 +310,7 @@ test_that("{shinytest2}: zeroToNA exports the expected QFeatures object", {
 
     qf <- make_process_test_qfeatures()
     app <- AppDriver$new(
-        QFeaturesGUI::processQFeatures(qf, prefilledSteps = "zeroToNA"),
+        QFeaturesGUI::process(qf, prefilledSteps = "zeroToNA"),
         name = "processQFeatures_zeroToNA",
         height = 900,
         width = 1200
@@ -335,7 +333,7 @@ test_that("{shinytest2}: logTransform exports the expected QFeatures object", {
 
     qf <- make_process_test_qfeatures()
     app <- AppDriver$new(
-        QFeaturesGUI::processQFeatures(qf, prefilledSteps = "logTransform"),
+        QFeaturesGUI::process(qf, prefilledSteps = "logTransform"),
         name = "processQFeatures_logTransform",
         height = 900,
         width = 1200
@@ -425,7 +423,7 @@ test_that("{shinytest2}: normalisation exports the expected QFeatures object", {
 
     qf <- make_process_test_qfeatures()
     app <- AppDriver$new(
-        QFeaturesGUI::processQFeatures(qf, prefilledSteps = "normalisation"),
+        QFeaturesGUI::process(qf, prefilledSteps = "normalisation"),
         name = "processQFeatures_normalisation",
         height = 900,
         width = 1200
@@ -456,7 +454,7 @@ test_that("{shinytest2}: aggregation exports the expected QFeatures object", {
 
     qf <- make_process_test_qfeatures()
     app <- AppDriver$new(
-        QFeaturesGUI::processQFeatures(qf, prefilledSteps = "aggregation"),
+        QFeaturesGUI::process(qf, prefilledSteps = "aggregation"),
         name = "processQFeatures_aggregation",
         height = 900,
         width = 1200

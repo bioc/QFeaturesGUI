@@ -6,7 +6,7 @@ test_that("{shinytest2}: twoTable_importQFeatures", {
     data("inputTable", package = "QFeaturesGUI")
     data("sampleTable", package = "QFeaturesGUI")
 
-    appObject <- importQFeatures(
+    appObject <- import(
         colData = sampleTable,
         assayData = inputTable
     )
@@ -90,7 +90,7 @@ test_that("{shinytest2}: oneTable_importQFeatures", {
 
     data("inputTable", package = "QFeaturesGUI")
 
-    appObject <- importQFeatures(
+    appObject <- import(
         assayData = inputTable
     )
 
