@@ -10,7 +10,7 @@ Description: QFeaturesGUI is a suite of shiny apps that serve as graphical inter
 biocViews: Software, ShinyApps, GUI, Proteomics, SingleCell, DataImport, Preprocessing
 URL: https://rformassspectrometry.github.io/QFeaturesGUI/, https://github.com/rformassspectrometry/QFeaturesGUI
 BugReports: https://github.com/rformassspectrometry/QFeaturesGUI/issues
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: false
 Imports:
